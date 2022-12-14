@@ -1,14 +1,18 @@
 import "../styles/globals.css";
-import type { AppProps } from "next/app";
 import Layout from "components/Layout";
-import { wrapper } from "redux/store";
+import { Provider } from "react-redux";
+import { store } from "redux/store";
+
+import type { AppProps } from "next/app";
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <Provider store={store}>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </Provider>
   );
 };
 
-export default wrapper.withRedux(App);
+export default App;

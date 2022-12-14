@@ -20,8 +20,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/redux/moviesApi.js",
-    "src/redux/store.js"
+    "src/redux/moviesApi.ts",
+    "src/redux/store.ts"
   ],
   "exclude": ["node_modules"]
 }

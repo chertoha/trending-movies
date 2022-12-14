@@ -1,12 +1,13 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useEffect } from "react";
-import { useGetMoviesQuery } from "redux/moviesApi";
+import { useGetTrendingsQuery } from "redux/moviesApi";
 
 const Home = () => {
-  const { data, error, loading } = useGetMoviesQuery();
+  const { data } = useGetTrendingsQuery();
+  console.log(data);
 
-  useEffect(() => {}, []);
+  // useEffect(() => {}, []);
 
   return (
     <>
