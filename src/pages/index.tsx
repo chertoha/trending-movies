@@ -1,13 +1,23 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useEffect } from "react";
-import { useGetTrendingsQuery } from "redux/moviesApi";
+import {
+  Movie,
+  useGetTrendingsQuery,
+  // useSearchMovieQuery,
+  // useMovieDetailsQuery,
+  // useMovieCastQuery,
+  // useMovieReviewsQuery,
+} from "redux/moviesApi";
+
+import { FetchResultType } from "redux/moviesApi";
 
 const Home = () => {
-  const { data } = useGetTrendingsQuery();
-  console.log(data);
-
-  // useEffect(() => {}, []);
+  const data: FetchResultType = useGetTrendingsQuery();
+  const results: Movie[] = data.results;
+  // const { data } = useSearchMovieQuery("bullet");
+  // const { data } = useMovieReviewsQuery("718930");
+  console.log(results);
 
   return (
     <>

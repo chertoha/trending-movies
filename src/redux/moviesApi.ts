@@ -39,7 +39,7 @@ import {
 //     }
 //   };
 
-type Movie = {
+export type Movie = {
   id: number | string;
   title: string;
   original_title: string;
@@ -49,6 +49,12 @@ type Movie = {
   release_date: Date;
   vote_average: number;
   vote_count: number;
+};
+
+export type FetchResultType = {
+  page: number;
+  results: Movie[];
+  total_results: number;
 };
 
 export const moviesApi = createApi({
@@ -80,25 +86,54 @@ export const moviesApi = createApi({
       //     params: `api_key=1936ce94882661ecfd75d2c22e8905aa`,
       //   }),
       // }),
-      getTrendings: build.query<Movie[], string | void>({
+      getTrendings: build.query<FetchResultType, string | void>({
         query: () => ({
           url: "/trending/movie/day",
           params: { api_key: API_KEY },
         }),
+        transformResponse: (response: { results: Movie[] }) => response.results,
       }),
 
-      searchMovie: build.query<Movie[], string | void>({
+      searchMovie: build.query<FetchResultType, string | void>({
         query: (query) => ({
           url: "/search/movie",
           params: { api_key: API_KEY, query },
+        }),
+      }),
+
+      movieDetails: build.query<FetchResultType, string | void>({
+        query: (id) => ({
+          url: `/movie/${id}`,
+          params: { api_key: API_KEY },
+        }),
+      }),
+
+      movieCast: build.query<FetchResultType, string | void>({
+        query: (id) => ({
+          url: `movie/${id}/credits`,
+          params: { api_key: API_KEY },
+        }),
+      }),
+
+      movieReviews: build.query<FetchResultType, string | void>({
+        query: (id) => ({
+          url: `movie/${id}/reviews`,
+          params: { api_key: API_KEY },
         }),
       }),
     };
   },
 });
 
-export const { useGetTrendingsQuery } = moviesApi;
+export const {
+  useGetTrendingsQuery,
+  useSearchMovieQuery,
+  useMovieDetailsQuery,
+  useMovieCastQuery,
+  useMovieReviewsQuery,
+} = moviesApi;
 
+//718930
 // const getTrendings = async () => {
 //   const response = await fetchMovies.get(`trending/movie/day`);
 //   return response.data.results;
