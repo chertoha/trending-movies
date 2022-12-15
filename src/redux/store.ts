@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { moviesApi } from "./moviesApi";
+import { prevPageSlice } from "./prevPageSlice";
 
 export const store = configureStore({
   reducer: {
     // Add the generated reducer as a specific top-level slice
+    prevPage: prevPageSlice.reducer,
     [moviesApi.reducerPath]: moviesApi.reducer,
   },
   // Adding the api middleware enables caching, invalidation, polling,
@@ -14,3 +16,6 @@ export const store = configureStore({
 
 // export type AppStore = ReturnType<typeof store>;
 // export const wrapper = createWrapper(store);
+export type RootState = ReturnType<typeof store.getState>;
+
+export type AppDispatch = typeof store.dispatch;

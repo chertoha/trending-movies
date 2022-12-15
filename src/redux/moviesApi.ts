@@ -29,11 +29,14 @@ export const moviesApi = createApi({
         }),
       }),
 
-      movieDetails: build.query<FetchResultType, string | void>({
-        query: (id) => ({
-          url: `/movie/${id}`,
-          params: { api_key: API_KEY },
-        }),
+      movieDetails: build.query<{}, string | void>({
+        query: (id) => {
+          return { url: `/movie/${id}`, params: { api_key: API_KEY } };
+        },
+        // transformResponse(response: { data: FetchResultType }, meta, arg) {
+        //   console.log("response -> ", response);
+        //   return response;
+        // },
       }),
 
       movieCast: build.query<FetchResultType, string | void>({

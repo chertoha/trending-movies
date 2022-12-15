@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 
 const Cast = () => {
   const router = useRouter();
+  console.log(router);
   const { id } = router.query;
   return (
     <div>

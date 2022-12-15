@@ -3,12 +3,12 @@ import { FC } from "react";
 import { IMovie } from "types";
 
 type MoviesListPropsType = {
-  movies: IMovie[];
+  movies: IMovie[] | undefined;
 };
 
 const MoviesList: FC<MoviesListPropsType> = ({ movies }) => {
   if (!movies) {
-    return;
+    return null;
   }
 
   if (movies.length === 0) {

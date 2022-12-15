@@ -6,7 +6,7 @@ const Movies = () => {
       <Head>
         <title>Movies</title>
       </Head>
-      Movies page
+      Movies page (SEARCH HERE)
     </div>
   );
 };
