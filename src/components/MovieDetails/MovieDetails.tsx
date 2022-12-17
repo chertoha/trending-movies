@@ -1,10 +1,12 @@
 import ReturnLink from "components/ReturnLink";
 import Image from "next/image";
 import Link from "next/link";
+import imagePlug from "../../../public/images/movieCardPlug.jpg";
 import { FC } from "react";
 import { IMovie } from "types";
 import MovieMeta from "./MovieMeta";
 import { useRouter } from "next/router";
+import { BASE_IMG_URL } from "utils/config";
 
 type MovieDetailsPropsType = {
   data: IMovie | undefined;
@@ -25,7 +27,11 @@ const MovieDetails: FC<MovieDetailsPropsType> = ({ data, backPath }) => {
     vote_count,
     overview,
     genres,
+    poster_path,
   } = data;
+
+  // const imageSrc = poster_path ? BASE_IMG_URL + poster_path : imagePlugSrc;
+
   return (
     <>
       <ReturnLink to={backPath} text="Go back" />
@@ -33,7 +39,7 @@ const MovieDetails: FC<MovieDetailsPropsType> = ({ data, backPath }) => {
       <h1 hidden> Movie details</h1>
 
       <div>
-        {/* <Image src={} /> */}
+        {/* <Image src={imageSrc} alt={original_title} width={200} height={200} /> */}
         <MovieMeta
           title={original_title}
           date={new Date(release_date).getFullYear()}

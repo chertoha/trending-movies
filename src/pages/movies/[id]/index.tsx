@@ -2,14 +2,38 @@ import MovieDetails from "components/MovieDetails";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useMovieDetailsQuery } from "redux/moviesApi";
 import { IMovie } from "types";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "redux/store";
 import { setPrevPage } from "redux/prevPageSlice";
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { fetchMovieDetails } from "services/api";
 
-const Movie = () => {
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const { id } = context.params as { id: string };
+  const data = await fetchMovieDetails(id);
+  // const data = null;
+
+  if (!data) {
+    return {
+      notFound: true,
+    };
+  }
+  return {
+    props: {
+      data,
+    },
+  };
+};
+
+type MoviePropsType = {
+  data: IMovie;
+};
+
+const Movie: FC<MoviePropsType> = ({ data }) => {
   // useDispatch(setPrevPage("/movies"));
 
   // const dispatch = useDispatch();
@@ -18,20 +42,6 @@ const Movie = () => {
   // }, [dispatch]);
 
   const backPath = useSelector((state: RootState) => state.prevPage.path);
-
-  console.log(backPath);
-
-  const router = useRouter();
-  // console.log(router);
-  const { id } = router.query;
-
-  const response = useMovieDetailsQuery(id as string);
-  const data = response.data as IMovie | undefined;
-  // console.log(data);
-
-  if (!data) {
-    return null;
-  }
 
   return (
     <div>
