@@ -39,7 +39,7 @@ const MovieDetails: FC<MovieDetailsPropsType> = ({ data, backPath }) => {
       <h1 hidden> Movie details</h1>
 
       <div>
-        {/* <Image src={imageSrc} alt={original_title} width={200} height={200} /> */}
+        <Image src={imagePlug} alt={original_title} width={200} height={200} />
         <MovieMeta
           title={original_title}
           date={new Date(release_date).getFullYear()}
