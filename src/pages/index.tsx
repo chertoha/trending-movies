@@ -55,7 +55,7 @@ const Home: FC<HomePropsType> = ({ movies, error }) => {
   if (error)
     return (
       <div>
-        Sorry, something went wrong.{" "}
+        Sorry, something went wrong.
         {error.message && `Error: ${error.message}`}
       </div>
     );

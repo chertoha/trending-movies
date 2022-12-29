@@ -1,6 +1,5 @@
 import MovieDetails from "components/MovieDetails";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { IMovie } from "types";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,24 +8,30 @@ import { setPrevPage } from "redux/prevPageSlice";
 import { FC, useEffect } from "react";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { fetchMovieDetails } from "services/api";
+import AdditionalInfo from "components/AdditionalInfo";
+import MovieDetailsLayout from "components/MovieDetailsLayout";
+import { serverSideMovieDetails } from "utils/serverSideMovieDetails";
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  const { id } = context.params as { id: string };
-  const data = await fetchMovieDetails(id);
-  // const data = null;
+  const result = serverSideMovieDetails(context) as any;
 
-  if (!data) {
-    return {
-      notFound: true,
-    };
-  }
-  return {
-    props: {
-      data,
-    },
-  };
+  return result;
+  // const { id } = context.params as { id: string };
+  // const data = await fetchMovieDetails(id);
+  // // const data = null;
+
+  // if (!data) {
+  //   return {
+  //     notFound: true,
+  //   };
+  // }
+  // return {
+  //   props: {
+  //     data,
+  //   },
+  // };
 };
 
 type MoviePropsType = {
@@ -34,6 +39,9 @@ type MoviePropsType = {
 };
 
 const Movie: FC<MoviePropsType> = ({ data }) => {
+  const router = useRouter();
+  const movieId = router.query.id as string;
+
   // useDispatch(setPrevPage("/movies"));
 
   // const dispatch = useDispatch();
@@ -41,17 +49,13 @@ const Movie: FC<MoviePropsType> = ({ data }) => {
   //   dispatch(setPrevPage("/movies"));
   // }, [dispatch]);
 
-  const backPath = useSelector((state: RootState) => state.prevPage.path);
-
   return (
     <div>
       <Head>
         <title>Movie details</title>
       </Head>
-      <MovieDetails data={data} backPath={backPath} />
 
-      {/* <Link href={`/movies/${id}/cast`}>Cast</Link> */}
-      {/* <Link href={`/movies/${id}/reviews`}>Reviews</Link> */}
+      <MovieDetailsLayout movieData={data} movieId={movieId} />
     </div>
   );
 };

@@ -7,15 +7,18 @@ import { IMovie } from "types";
 import MovieMeta from "./MovieMeta";
 import { useRouter } from "next/router";
 import { BASE_IMG_URL } from "utils/config";
+import { useSelector } from "react-redux";
+import { RootState } from "redux/store";
 
 type MovieDetailsPropsType = {
   data: IMovie | undefined;
-  backPath: string;
 };
 
-const MovieDetails: FC<MovieDetailsPropsType> = ({ data, backPath }) => {
+const MovieDetails: FC<MovieDetailsPropsType> = ({ data }) => {
   // console.log(data);
   const router = useRouter();
+
+  const backPath = useSelector((state: RootState) => state.prevPage.path);
 
   if (!data) {
     return null;
@@ -30,7 +33,7 @@ const MovieDetails: FC<MovieDetailsPropsType> = ({ data, backPath }) => {
     poster_path,
   } = data;
 
-  // const imageSrc = poster_path ? BASE_IMG_URL + poster_path : imagePlugSrc;
+  const imageSrc = poster_path ? BASE_IMG_URL + poster_path : imagePlug;
 
   return (
     <>
@@ -39,7 +42,13 @@ const MovieDetails: FC<MovieDetailsPropsType> = ({ data, backPath }) => {
       <h1 hidden> Movie details</h1>
 
       <div>
-        <Image src={imagePlug} alt={original_title} width={200} height={200} />
+        <Image
+          priority
+          src={imageSrc}
+          alt={original_title}
+          width={200}
+          height={200}
+        />
         <MovieMeta
           title={original_title}
           date={new Date(release_date).getFullYear()}
