@@ -20,3 +20,20 @@ export type FetchResultType = {
   results: IMovie[];
   total_results: number;
 };
+
+export interface ICast {
+  cast_id: number | string;
+  credit_id: string;
+  character: string;
+  name: string;
+  gender: number;
+  profile_path: string;
+}
+
+export interface IReview {
+  id: string;
+  author: string;
+  content: string;
+}
+
+export type StatusType = "idle" | "pending" | "rejected" | "resolved";

@@ -10,28 +10,25 @@ import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { fetchMovieDetails } from "services/api";
 import AdditionalInfo from "components/AdditionalInfo";
 import MovieDetailsLayout from "components/MovieDetailsLayout";
-import { serverSideMovieDetails } from "utils/serverSideMovieDetails";
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  const result = serverSideMovieDetails(context) as any;
+  const { id } = context.params as { id: string };
+  const data = await fetchMovieDetails(id);
+  // const data = null;
 
-  return result;
-  // const { id } = context.params as { id: string };
-  // const data = await fetchMovieDetails(id);
-  // // const data = null;
+  if (!data) {
+    return {
+      notFound: true,
+    };
+  }
 
-  // if (!data) {
-  //   return {
-  //     notFound: true,
-  //   };
-  // }
-  // return {
-  //   props: {
-  //     data,
-  //   },
-  // };
+  return {
+    props: {
+      data,
+    },
+  };
 };
 
 type MoviePropsType = {

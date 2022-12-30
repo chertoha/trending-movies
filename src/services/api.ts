@@ -19,7 +19,7 @@ export const fetchMovieDetails = async (id: string) => {
   return response.data;
 };
 
-export const fetchSearchedMovie = async (query: string) => {
+export const fetchSearchedMovies = async (query: string) => {
   const response = await api.get(`search/movie`, { params: { query } });
   return response.data;
 };

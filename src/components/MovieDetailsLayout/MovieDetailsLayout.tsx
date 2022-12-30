@@ -16,7 +16,10 @@ const MovieDetailsLayout: FC<MovieDetailsLayoutPropsType> = ({
     <div>
       <MovieDetails data={movieData} />
       <br />
+      <hr />
       <AdditionalInfo movieId={movieId} />
+      <br />
+      <hr />
     </div>
   );
 };

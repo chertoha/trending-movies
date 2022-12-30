@@ -1,35 +1,53 @@
+import CastList from "components/CastList";
 import MovieDetailsLayout from "components/MovieDetailsLayout";
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import Head from "next/head";
-import { useRouter } from "next/router";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { FC } from "react";
-import { IMovie } from "types";
-import { serverSideMovieDetails } from "utils/serverSideMovieDetails";
+import { fetchMovieCast, fetchMovieDetails } from "services/api";
+import { ICast, IMovie } from "types";
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  const data = serverSideMovieDetails(context) as any;
+  const { id } = context.params as { id: string };
+  const data = await fetchMovieDetails(id);
+  const { cast } = await fetchMovieCast(id);
+  // const data = null;
 
-  return data;
+  if (!data || !cast) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      movieId: id,
+      movieData: data,
+      cast,
+    },
+  };
 };
-
 type CastPropsType = {
-  data: IMovie;
+  movieId: string;
+  movieData: IMovie;
+  cast: ICast[];
 };
 
-const Cast: FC<CastPropsType> = ({ data }) => {
-  const router = useRouter();
-  const movieId = router.query.id as string;
+const Cast: FC<CastPropsType> = ({ movieId, movieData, cast }) => {
+  console.log(cast);
+  // const router = useRouter();
+  // const movieId = router.query.id as string;
 
-  const { id } = router.query;
+  // const { id } = router.query;
   return (
     <div>
       <Head>
-        <title>Cast id: {id}</title>
+        <title>Cast id: {movieId}</title>
       </Head>
-      <MovieDetailsLayout movieData={data} movieId={movieId} />
-      Cast
+      <MovieDetailsLayout movieData={movieData} movieId={movieId} />
+
+      <CastList cast={cast} />
     </div>
   );
 };

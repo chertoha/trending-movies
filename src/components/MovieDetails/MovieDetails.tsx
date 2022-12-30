@@ -1,7 +1,8 @@
 import ReturnLink from "components/ReturnLink";
 import Image from "next/image";
 import Link from "next/link";
-import imagePlug from "../../../public/images/movieCardPlug.jpg";
+// import imagePlug from "../../../public/images/movieCardPlug.jpg";
+import imagePlug from "/public/images/movieCardPlug.jpg";
 import { FC } from "react";
 import { IMovie } from "types";
 import MovieMeta from "./MovieMeta";

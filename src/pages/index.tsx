@@ -5,13 +5,6 @@ import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { fetchTrendings } from "services/api";
 import { IMovie } from "types";
 import { FC } from "react";
-// import {
-//   useGetTrendingsQuery,
-//   // useSearchMovieQuery,
-//   // useMovieDetailsQuery,
-//   // useMovieCastQuery,
-//   // useMovieReviewsQuery,
-// } from "redux/moviesApi";
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
@@ -50,7 +43,7 @@ const Home: FC<HomePropsType> = ({ movies, error }) => {
   // const response = useGetTrendingsQuery();
   // const movies = response?.data?.results;
   // console.log(movies);
-  console.log(movies);
+  // console.log(movies);
 
   if (error)
     return (

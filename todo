@@ -1,2 +1,12 @@
 1 https://chertoha.github.io/goit-react-hw-05-movies/movies/1057648
 bug - 0
+
+2 api.js to .ts
+
+3) reviews - reviews: any - new type!
+
+4) try catch to fetches - cast, reviews, search(movies page)
+
+5) page movies (search)  - Loading -spinner
+
+6) persistor for prevPath or another way
