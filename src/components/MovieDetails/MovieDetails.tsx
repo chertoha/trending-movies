@@ -19,7 +19,7 @@ const MovieDetails: FC<MovieDetailsPropsType> = ({ data }) => {
   // console.log(data);
   const router = useRouter();
 
-  const backPath = useSelector((state: RootState) => state.prevPage.path);
+  // const backPath = useSelector((state: RootState) => state.prevPage.path);
 
   if (!data) {
     return null;
@@ -38,7 +38,15 @@ const MovieDetails: FC<MovieDetailsPropsType> = ({ data }) => {
 
   return (
     <>
-      <ReturnLink to={backPath} text="Go back" />
+      {/* <ReturnLink to={backPath} text="Go back" /> */}
+      <button
+        type="button"
+        onClick={() => {
+          router.back();
+        }}
+      >
+        Back
+      </button>
 
       <h1 hidden> Movie details</h1>
 
